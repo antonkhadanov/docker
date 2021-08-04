@@ -243,45 +243,45 @@ Hands-on practice quest #01: pre-built disk image lifecycle (15+5)
 - [ ] When участники именуют сценарии, выполняют команды и анализируют их вывод и поведение
 - Сценарий "Как ...?"
 ```shell
-docker image ls # TODO: собственные пометки участников для будущего использования в проектах
+docker image ls # вывод всех образов
 ```
 
 - Сценарий "Как ...?"
 ```shell
-docker image pull alpine
-docker image ls
+docker image pull alpine #пулл образа
+docker image ls  # вывод списка образов, не изменился после пулла
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как see container history and metadata?"
 ```shell
-docker image history alpine
+docker image history alpine #просмотр истории образа
 
-docker image inspect alpine
-docker image inspect --format='{{.Id}} -> {{.Parent}}' alpine
+docker image inspect alpine  # see image metadata
+docker image inspect --format='{{.Id}} -> {{.Parent}}' alpine   # output of metadata in the specified format.
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как manually make changes and create a new layer?"
 ```shell
-docker container run --name demo -it alpine
-/# touch side-effect.txt
+docker container run --name demo -it alpine   # run container, giving it name 'demo' and then create a file inside it.
+/# touch side-effect.txt   
 /# exit
-docker container diff demo
-docker container commit demo {{ registry-account }}/demo
-docker image ls
+docker container diff demo  # see diff between current state of container and initial. Note a new file and changes in bash history
+docker container commit demo {{ registry-account }}/demo  # commit just made changes thus creating a new layer
+docker image ls   # see list of images
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как tag a container?"
 ```shell
-docker image tag {{ registry-account }}/demo:latest {{ registry-account }}/demo:1.0.0
-docker image ls
+docker image tag {{ registry-account }}/demo:latest {{ registry-account }}/demo:1.0.0   # associate v1.0.0 with latest, now we have 2 images.
+docker image ls  # see list of images, note that 2 versions of antonkhadanov/demo exist - one latest, one 1.0.0
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как pull a container?"
 ```shell
-docker image push {{ registry-account }}/demo:1.0.0
+docker image push {{ registry-account }}/demo:1.0.0   # push to docker registry the specified image
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как remove a container, including prune ?"
 ```shell
 docker image ls
 docker container rm demo
